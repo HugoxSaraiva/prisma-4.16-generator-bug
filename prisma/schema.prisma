@@ -10,25 +10,13 @@ generator client {
   output   = "../client"
 }
 
-/// Model for Posts!
-model Post {
-  id Int @id @default(autoincrement())
-
-  media PostMedia[]
+model Notification {
+  id      Int                   @id @default(autoincrement())
+  payload NotificationPayload[]
 }
 
-model Media {
-  id Int @id @default(autoincrement())
-
-  posts PostMedia[]
-}
-
-model PostMedia {
-  id      Int   @id @default(autoincrement())
-  post    Post  @relation(fields: [postId], references: [id])
-  media   Media @relation(fields: [mediaId], references: [id])
-  postId  Int
-  mediaId Int
-
-  @@unique([postId, mediaId])
+model NotificationPayload {
+  id             Int          @id @default(autoincrement())
+  notification   Notification @relation(fields: [notificationId], references: [id])
+  notificationId Int
 }
